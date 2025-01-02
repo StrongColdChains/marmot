@@ -1,0 +1,16 @@
+version: 2
+
+macros:
+  - name: alarm_detection
+    description: >
+        Convert a table containing time series data to a table that detects
+        when arbitrary alarms are ongoing.
+    arguments:
+      - name: source_table
+        type: string
+        description: >
+            The table containing the time series data. This table must
+            have a time column and a 
+      - name: precision
+        type: integer
+        description: Number of decimal places. Defaults to 2.

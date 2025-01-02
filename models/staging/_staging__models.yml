@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_temperature_ts
+    description: "base table for temperature time series data"
+    columns:
+      - name: cce_id
+        data_type: text
+      - name: monitor_id
+        data_type: text
+      - name: temperature
+        data_type: float
+      - name: created_at
+        description: "When the time series data was measured by the monitor"
+        data_type: timestamp
+      - name: received_at
+        description: "When the data was received by the server"
+        data_type: timestamp

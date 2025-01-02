@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: public
+    tables:
+        - name: raw_door
+        - name: raw_emd_connection
+        - name: raw_temperature
+        - name: raw_power

@@ -1,0 +1,7 @@
+cce_id,inferred_cce_type
+a,fridge
+b,ambient
+c,freezer
+d,invalid_high
+e,invalid_low
+f,invalid_high

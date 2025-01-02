@@ -1,0 +1,8 @@
+created_at,temperature,cce_id,monitor_id,temperature_cce_type_range
+2023-11-22 00:00:00+00,1,a,a,fridge
+2023-11-22 00:30:00+00,25,a,a,ambient
+2023-11-22 01:00:00+00,11,a,a,fridge
+2023-11-22 01:30:00+00,-2,a,a,fridge
+2023-11-22 01:30:00+00,-20,a,a,freezer
+2023-11-22 02:00:00+00,-100,a,a,invalid_low
+2023-11-22 02:30:00+00,85,a,a,invalid_high

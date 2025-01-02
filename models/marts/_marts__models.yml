@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: inferred_cce_type
+    description: "The inferred type of a given CCE. This is used to detect mislabeled CCE types."
+    columns:
+      - name: inferred_cce_type
+        # TODO: can we make this an enum?
+        description: "[fridge, freezer, ambient, invalid_low, invalid_high]"
+        data_type: text
+        data_tests:
+          - not_null
+  - name: temperature_kpis
+    description: "Freeze alarm KPIs. Some are defined by the WHO PQS, others are home-grown."
+    columns:
+      - name: alarm_count
+        description: the total number of alarms for this CCE in the last 30 days
+        data_tests:
+          - not_null
+      - name: long_alarm_count
+        description: the total number of alarms for this CCE in the last 30 days that last for 2 days
+        data_tests:
+          - not_null
+      - name: cumulative_alarm_time
+        description: the cumulative amount of time a alarm was active for this CCE in the last 30 days
+        data_tests:
+          - not_null
+      # TODO: average is not enough. We could report quartiles?
+      - name: average_alarm_time
+        description: the average time a alarm was active for this CCE in the last 30 days.
+      - name: max_alarm_time
+        description: the maximum time a alarm was active for this CCE in the last 30 days.
+      - name: alarm_type
+        description: the type of alarm this was.
