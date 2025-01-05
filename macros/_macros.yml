@@ -1,7 +1,7 @@
 version: 2
 
 macros:
-  - name: alarm_detection
+  - name: interval_detection
     description: >
         Convert a table containing time series data to a table that detects
         when arbitrary alarms are ongoing.

@@ -1,4 +1,4 @@
-{% macro alarm_detection(
+{% macro interval_detection(
     source_table, 
     time_column, 
     float_column, 
