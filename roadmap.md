@@ -4,6 +4,7 @@ A vague list of things that we'd like to do in the near future.
 
 ## technical things
 
+- Refactor temperature intervals + alarms. See alarm_thoughts.md for more deets.
 - Implement ACK as time series data!
 - add sim signal strength
   - "Cell signal strength typically ranges from -50 dBm to -120 dBm"
