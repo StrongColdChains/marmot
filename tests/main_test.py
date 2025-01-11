@@ -79,3 +79,19 @@ def test_heat_fridge_alarms(db_connection):
     print(results)
     for result, expected_result in zip(results, expected_results):
         assert result == expected_result, f"{result}, {expected_result}"
+
+def test_power_alarms(db_connection):
+    expected_results = [
+        (
+            datetime.datetime(2023, 11, 23, 0, 0),
+            None,
+            "a"
+        )
+    ]
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT begin, stop, cce_id FROM power_alarms ORDER BY cce_id, begin")
+    results = cursor.fetchall()
+
+    print(results)
+    for result, expected_result in zip(results, expected_results):
+        assert result == expected_result, f"{result}, {expected_result}"
