@@ -1,0 +1,4 @@
+[sqlfluff]
+dialect = ansi
+templater = dbt
+max_line_length = 80
