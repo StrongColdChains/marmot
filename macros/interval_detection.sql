@@ -45,7 +45,7 @@ threshold_crossed AS (
         {% endfor %}
         -- Calculate the time difference from the previous row in minutes
         EXTRACT(epoch FROM (created_at - previous_created_at))
-        / 60 AS minutes_since_previous_datapoint
+        / 60.0 AS minutes_since_previous_datapoint
     FROM input_with_lag
 ),
 

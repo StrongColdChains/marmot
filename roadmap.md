@@ -64,4 +64,5 @@ A vague list of things that we'd like to do in the near future.
     can we do to improve their performance?
 - is there any way we can measure the effectiveness of device setups? For devices that operate over
     wires, is there any way for us to know if a configuration is bad?
+- is there a reason EMD alarms are defined but not KPIs?
 
