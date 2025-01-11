@@ -65,4 +65,7 @@ A vague list of things that we'd like to do in the near future.
 - is there any way we can measure the effectiveness of device setups? For devices that operate over
     wires, is there any way for us to know if a configuration is bad?
 - is there a reason EMD alarms are defined but not KPIs?
+- https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457 read
+    through this. Does it really make sense to not try to tackle any real-time data stuff with this
+    project? What frequency limitations does this project have?
 
