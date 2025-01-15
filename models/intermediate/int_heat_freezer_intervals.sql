@@ -3,12 +3,7 @@
     time_column='created_at',
     float_column='temperature',
     identity_columns=['cce_id', 'monitor_id'],
-    defined_alarms=[
-        {
-            'alarm_name': 'heat_freezer_alarm',
-            'comparison_operator': '>',
-            'threshold': '-15',
-            'duration_threshold': '60'
-        }
-    ]
+    comparison_operator='>',
+    threshold=-15,
+    duration_threshold=60
 ) }}

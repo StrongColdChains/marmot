@@ -43,13 +43,3 @@ vars:
   # and how to ensure NOW is replaced with actual now when
   # this is run in prod.
   now: "2023-12-01 00:00:00+00"
-  defined_temperature_alarms:
-    - alarm_name: "freeze_fridge"
-      comparison_operator: "<"
-      threshold: -0.5
-    - alarm_name: "heat_fridge"
-      comparison_operator: ">"
-      threshold: 8
-    - alarm_name: "heat_freezer"
-      comparison_operator: ">"
-      threshold: -15
