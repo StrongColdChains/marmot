@@ -22,11 +22,6 @@ select
     alarm_temperature_type,
     alarm_cce_type
 from {{ ref('temperature_alarms') }}
--- TODO: figure out how to mock '{{ var("now") }}'::timestamptz for tests.
--- Should we use vars?
--- Your tests are quite bad right now without decent NOW mocking.
--- TODO: "in the last 30 days", should we be measuring that relative
--- to the end of an alarm or the beginning?
 where
     COALESCE(stop, '{{ var("now") }}'::timestamptz)
     >= '{{ var("now") }}'::timestamptz - interval '30 days'
