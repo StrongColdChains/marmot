@@ -2,7 +2,7 @@
     source_table=ref('stg_emd_connection_ts'),
     time_column='created_at',
     float_column='connected',
-    partition_columns=['cce_id', 'monitor_id'],
+    identity_columns=['cce_id', 'monitor_id'],
     defined_alarms=[
         {
             'alarm_name': 'emd_disconnection_alarm',

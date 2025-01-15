@@ -2,7 +2,7 @@
     source_table, 
     time_column, 
     float_column, 
-    partition_columns, 
+    identity_columns, 
     defined_alarms
 ) %}
 WITH input_with_lag AS (
@@ -12,13 +12,13 @@ WITH input_with_lag AS (
         -- TODO: / NOTE: should we even care about monitor ID here?
         -- if alarms are keyed on CCE, then we shouldn't care about
         -- the device that's monitoring that CCE.
-        {% for column in partition_columns %}
+        {% for column in identity_columns %}
             {{ column }},
         {% endfor %}
         LAG({{ time_column }})
             OVER (
                 PARTITION BY 
-                    {% for column in partition_columns %}
+                    {% for column in identity_columns %}
                         {{ column }}{{ "," if not loop.last else "" }}
                     {% endfor %}
                 ORDER BY {{ time_column }}
@@ -30,7 +30,7 @@ threshold_crossed AS (
     SELECT
         metric_value,
         created_at,
-        {% for column in partition_columns %}
+        {% for column in identity_columns %}
             {{ column }},
         {% endfor %}
         {% for alarm_dict in defined_alarms %}
@@ -67,7 +67,7 @@ reset_groups AS (
                 END
             ) OVER (
                 PARTITION BY 
-                    {% for column in partition_columns %}
+                    {% for column in identity_columns %}
                         {{ column }}{{ "," if not loop.last else "" }}
                     {% endfor %}
                 ORDER BY created_at
@@ -93,7 +93,7 @@ cumulative_threshold_crossed AS (
                 END
             ) OVER (
                 PARTITION BY reset_group,
-                    {% for column in partition_columns %}
+                    {% for column in identity_columns %}
                         {{ column }}{{ "," if not loop.last else "" }}
                     {% endfor %}
                 ORDER BY created_at
@@ -102,7 +102,7 @@ cumulative_threshold_crossed AS (
         created_at,
         metric_value,
         minutes_since_previous_datapoint,
-        {% for column in partition_columns %}
+        {% for column in identity_columns %}
             {{ column }}{{ "," if not loop.last else "" }}
         {% endfor %}
     FROM reset_groups
@@ -125,7 +125,7 @@ intervals AS (
                         )
                         OVER (
                             PARTITION BY
-                            {% for column in partition_columns %}
+                            {% for column in identity_columns %}
                                 {{ column }}{{ "," if not loop.last else "" }}
                             {% endfor %}
                             ORDER BY created_at
@@ -134,7 +134,7 @@ intervals AS (
                 WHEN LAG(cumulative_minutes)
                         OVER (
                             PARTITION BY
-                            {% for column in partition_columns %}
+                            {% for column in identity_columns %}
                                 {{ column }}{{ "," if not loop.last else "" }}
                             {% endfor %}
                             ORDER BY created_at

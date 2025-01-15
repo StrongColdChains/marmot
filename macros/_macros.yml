@@ -11,6 +11,33 @@ macros:
         description: >
             The table containing the time series data. This table must
             have a time column and a 
-      - name: precision
-        type: integer
-        description: Number of decimal places. Defaults to 2.
+      - name: time_column
+        type: string
+        description: >
+            The column that contains the relevant timestamp information.
+      - name: float_column
+        type: string
+        description: >
+            The column that contains the relevant information to reference
+            for the thresholds.
+      - name: identity_columns
+        type: list
+        description: >
+            The list of columns that determine which time series rows should
+            be grouped together. These columns together make up the "identity"
+            of the interval in question. Typically these columns are the CCE id
+            and the montior id.
+      - name: defined_alarms
+        type: dictionary
+        description: >
+            The dictionary describing what alarm should be created
+  - name: interval_to_alarm
+    description: >
+        Convert an interval table (see interval_detection) to a series of
+        alarms.
+    arguments:
+      - name: source_table
+        type: string
+        description: >
+            The table containing the time series data. This table must
+            have a time column and a 
