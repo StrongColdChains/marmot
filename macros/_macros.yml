@@ -24,13 +24,6 @@ macros:
         description: >
             The column that contains the relevant information to reference
             for the thresholds.
-      - name: identity_columns
-        type: list
-        description: >
-            The list of columns that determine which time series rows should
-            be grouped together. These columns together make up the "identity"
-            of the interval in question. Typically these columns are the CCE id
-            and the montior id.
       - name: comparison_operator
         type: string
         description: The operator used when defining the threshold (=, <, >, etc)

@@ -2,7 +2,6 @@
     source_table, 
     time_column, 
     float_column, 
-    identity_columns, 
     comparison_operator,
     threshold,
     duration_threshold
@@ -14,15 +13,10 @@ WITH input_with_lag AS (
         -- TODO: / NOTE: should we even care about monitor ID here?
         -- if alarms are keyed on CCE, then we shouldn't care about
         -- the device that's monitoring that CCE.
-        {% for column in identity_columns %}
-            {{ column }},
-        {% endfor %}
+        cce_id,
         LAG({{ time_column }})
             OVER (
-                PARTITION BY 
-                    {% for column in identity_columns %}
-                        {{ column }}{{ "," if not loop.last else "" }}
-                    {% endfor %}
+                PARTITION BY cce_id
                 ORDER BY {{ time_column }}
             ) AS previous_created_at
     FROM {{ source_table }}
@@ -32,17 +26,15 @@ threshold_crossed AS (
     SELECT
         metric_value,
         created_at,
-        {% for column in identity_columns %}
-            {{ column }},
-        {% endfor %}
-            CASE
-                WHEN
-                    metric_value
-                    {{ comparison_operator }}
-                    {{ threshold }}
-                THEN TRUE ELSE
-                FALSE
-            END AS threshold_is_crossed,
+        cce_id,
+        CASE
+            WHEN
+                metric_value
+                {{ comparison_operator }}
+                {{ threshold }}
+            THEN TRUE ELSE
+            FALSE
+        END AS threshold_is_crossed,
         -- Calculate the time difference from the previous row in minutes
         EXTRACT(epoch FROM (created_at - previous_created_at))
         / 60.0 AS minutes_since_previous_datapoint
@@ -65,10 +57,7 @@ reset_groups AS (
                     0
             END
         ) OVER (
-            PARTITION BY 
-                {% for column in identity_columns %}
-                    {{ column }}{{ "," if not loop.last else "" }}
-                {% endfor %}
+            PARTITION BY cce_id
             ORDER BY created_at
         ) AS reset_group,
         *
@@ -89,18 +78,13 @@ cumulative_threshold_crossed AS (
                 ELSE 0
             END
         ) OVER (
-            PARTITION BY reset_group,
-                {% for column in identity_columns %}
-                    {{ column }}{{ "," if not loop.last else "" }}
-                {% endfor %}
+            PARTITION BY reset_group, cce_id
             ORDER BY created_at
         ) AS cumulative_minutes,
         created_at,
         metric_value,
         minutes_since_previous_datapoint,
-        {% for column in identity_columns %}
-            {{ column }}{{ "," if not loop.last else "" }}
-        {% endfor %}
+        cce_id
     FROM reset_groups
 ),
 
@@ -119,19 +103,13 @@ intervals AS (
                     cumulative_minutes
                     )
                     OVER (
-                        PARTITION BY
-                        {% for column in identity_columns %}
-                            {{ column }}{{ "," if not loop.last else "" }}
-                        {% endfor %}
+                        PARTITION BY cce_id
                         ORDER BY created_at
                     ) <= {{ duration_threshold }}
                 THEN 'begin'
             WHEN LAG(cumulative_minutes)
                     OVER (
-                        PARTITION BY
-                        {% for column in identity_columns %}
-                            {{ column }}{{ "," if not loop.last else "" }}
-                        {% endfor %}
+                        PARTITION BY cce_id
                         ORDER BY created_at
                     ) > {{ duration_threshold }}
                 THEN

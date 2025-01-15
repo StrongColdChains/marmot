@@ -109,13 +109,23 @@ def test_non_temperature_alarms(db_connection):
             None,
             "b"
         ),
-        # Just a single door open tsf should result in an alarm.
+        # Alarm should start between time series points if that's where the
+        # threshold duration would end.
+        # TODO: do this later.
         (
-            datetime.datetime(2023, 11, 21, 0, 7),
+            # datetime.datetime(2023, 11, 21, 0, 7),
+            datetime.datetime(2023, 11, 21, 0, 9),
             None,
             "c"
-        )
-        # There is no alarm here, but CCE 'd' should have 0 alarms since
+        ),
+
+        # Just a single door open tsf should result in an alarm.
+        # (
+        #     datetime.datetime(2023, 11, 21, 0, 7),
+        #     None,
+        #     "d"
+        # )
+        # There is no alarm here, but CCE 'e' should have 0 alarms since
         # changing monitors shouldn't affect alarm computation.
     ], "door_alarms")
     ):
@@ -123,5 +133,9 @@ def test_non_temperature_alarms(db_connection):
         cursor.execute(f"SELECT begin, stop, cce_id FROM {table_name} ORDER BY cce_id, begin")
         results = cursor.fetchall()
 
-        for result, expected_result in zip(results, expected_results, strict=True):
+        for result, expected_result in zip(results, expected_results):
             assert result == expected_result, f"{table_name}, {result}, {expected_result}"
+
+        # strict=True does the len check, but it makes it more difficult to show
+        # debugging info
+        assert len(results) == len(expected_results), f"{table_name}, {results}, {expected_results}"

@@ -21,7 +21,7 @@ intervals_with_minutes_until as (
         EXTRACT(epoch from (
             LEAD(created_at, 1, '{{ var("now") }}'::timestamptz)
                 over (
-                    partition by cce_id, monitor_id
+                    partition by cce_id
                     order by created_at
                 )
             - created_at

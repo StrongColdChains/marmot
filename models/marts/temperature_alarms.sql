@@ -27,9 +27,9 @@ with unioned_intervals as (
 
 temperature_alarms as (
     select
+        -- TODO: implement the logic here buddy
         begin_intervals.created_at as begin,
         begin_intervals.cce_id,
-        begin_intervals.monitor_id,
         begin_intervals.alarm_temperature_type,
         begin_intervals.alarm_cce_type,
         MIN(stop_intervals.created_at) as stop
@@ -40,7 +40,6 @@ temperature_alarms as (
             and begin_intervals.alarm_status = 'begin'
             and stop_intervals.alarm_status = 'stop'
             and begin_intervals.cce_id = stop_intervals.cce_id
-            and begin_intervals.monitor_id = stop_intervals.monitor_id
             and begin_intervals.alarm_cce_type = stop_intervals.alarm_cce_type
             and begin_intervals.alarm_temperature_type
             = stop_intervals.alarm_temperature_type
@@ -48,7 +47,6 @@ temperature_alarms as (
         begin_intervals.alarm_status = 'begin'
     group by
         begin_intervals.cce_id,
-        begin_intervals.monitor_id,
         begin_intervals.created_at,
         begin_intervals.alarm_temperature_type,
         begin_intervals.alarm_cce_type
