@@ -101,12 +101,27 @@ def test_non_temperature_alarms(db_connection):
             datetime.datetime(2023, 11, 21, 0, 15),
             datetime.datetime(2023, 11, 21, 0, 16),
             "a"
+        ),
+        # Verify time series data that isn't even in spacing still results
+        # in alarms.
+        (
+            datetime.datetime(2023, 11, 21, 0, 7),
+            None,
+            "b"
+        ),
+        # Just a single door open tsf should result in an alarm.
+        (
+            datetime.datetime(2023, 11, 21, 0, 7),
+            None,
+            "c"
         )
+        # There is no alarm here, but CCE 'd' should have 0 alarms since
+        # changing monitors shouldn't affect alarm computation.
     ], "door_alarms")
     ):
         cursor = db_connection.cursor()
         cursor.execute(f"SELECT begin, stop, cce_id FROM {table_name} ORDER BY cce_id, begin")
         results = cursor.fetchall()
 
-        for result, expected_result in zip(results, expected_results):
+        for result, expected_result in zip(results, expected_results, strict=True):
             assert result == expected_result, f"{table_name}, {result}, {expected_result}"
