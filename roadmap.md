@@ -6,14 +6,16 @@ A vague list of things that we'd like to do in the near future.
 
 - Refactor temperature intervals + alarms. See alarm_thoughts.md for more deets.
 - Implement ACK as time series data!
+  - Good introductary feature.
 - add sim signal strength
   - "Cell signal strength typically ranges from -50 dBm to -120 dBm"
   - if a device goes offline and the previous few days of signal strength are really
       bad, then we can attribute the offline to sim connectivity.
-- Implement door / power kpis.
+  - Good introductary feature.
 - Implement functional status of appliance, uptime score.
   - let's not just make functional status a bool. let's change it to a float so that
       we can provide a more nuanced understanding of the appliance's health.
+  - Good introductary feature.
 - Create basic metrics that assess the health of the underlying CCE.
   - pull out things like the range of the temperature wave. rate of temp increase.
   - see if the average temperature of the cce is consistently drifting low
