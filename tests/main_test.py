@@ -139,3 +139,7 @@ def test_non_temperature_alarms(db_connection):
         # strict=True does the len check, but it makes it more difficult to show
         # debugging info
         assert len(results) == len(expected_results), f"{table_name}, {results}, {expected_results}"
+
+def test_connectivity_kpis(db_connection):
+    # TODO: add these.
+    pass

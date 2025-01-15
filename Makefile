@@ -19,3 +19,7 @@ dbt_test_build:
 
 	# Testing source freshness
 	dbt source freshness
+
+docs:
+	dbt docs generate
+	dbt docs serve
