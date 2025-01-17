@@ -10,9 +10,6 @@ WITH input_with_lag AS (
     SELECT
         {{ float_column }} AS metric_value,
         {{ time_column }} AS created_at,
-        -- TODO: / NOTE: should we even care about monitor ID here?
-        -- if alarms are keyed on CCE, then we shouldn't care about
-        -- the device that's monitoring that CCE.
         cce_id,
         LAG({{ time_column }})
             OVER (
