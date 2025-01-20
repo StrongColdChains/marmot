@@ -2,3 +2,12 @@
 dialect = ansi
 templater = dbt
 max_line_length = 80
+
+[sqlfluff:templater:dbt]
+project_dir = .
+profiles_dir = ~/.dbt/
+profile = cold_chain_dbt
+target = dev
+
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = True

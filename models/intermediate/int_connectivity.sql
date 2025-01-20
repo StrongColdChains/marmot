@@ -4,28 +4,28 @@ with unioned_ts as (
         created_at,
         received_at,
         monitor_id,
-        'door' as source
+        'door' as source -- noqa: RF04
     from {{ ref('stg_door_ts') }}
     union distinct
     select
         created_at,
         received_at,
         monitor_id,
-        'emd_connection' as source
+        'emd_connection' as source -- noqa: RF04
     from {{ ref('stg_emd_connection_ts') }}
     union distinct
     select
         created_at,
         received_at,
         monitor_id,
-        'power' as source
+        'power' as source -- noqa: RF04
     from {{ ref('stg_power_ts') }}
     union distinct
     select
         created_at,
         received_at,
         monitor_id,
-        'temperature' as source
+        'temperature' as source -- noqa: RF04
     from {{ ref('stg_temperature_ts') }}
 )
 
@@ -42,7 +42,7 @@ select
             > interval '0 minutes'
             then
                 (received_at - created_at)
-                - interval '{{ var("connectivity_lateness_threshold") }} minutes'
+                - interval '{{ var("connectivity_lateness_threshold") }} minutes' -- noqa: LT05
         else interval '0 minutes'
     end
         as lateness,

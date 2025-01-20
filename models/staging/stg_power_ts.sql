@@ -10,7 +10,7 @@ retyped as (
         cce_id,
         monitor_id,
         -- sensor reading
-        CAST(power as INTEGER) as power,
+        CAST(power as INTEGER) as power, -- noqa: RF04
         -- time
         CAST(t as TIMESTAMP) as created_at,
         CAST(rt as TIMESTAMP) as received_at
