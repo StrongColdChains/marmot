@@ -22,7 +22,11 @@ with alarms as (
         MAX(begin_thresholds.cumulative_minutes) >= {{ duration_threshold }}
 )
 
-select *
+select
+    begin,
+    stop,
+    cce_id,
+    COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin as duration
 from alarms
 order by begin
 

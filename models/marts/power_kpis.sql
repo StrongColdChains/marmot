@@ -2,12 +2,8 @@ with normal_kpis as (
     select
         cce_id,
         COUNT(*) as alarm_count,
-        SUM(
-            COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-        ) as cumulative_alarm_time,
-        AVG(
-            COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-        ) as average_alarm_time
+        SUM(duration) as cumulative_alarm_time,
+        AVG(duration) as average_alarm_time
     from {{ ref('power_alarms') }}
     where
         COALESCE(stop, '{{ var("now") }}'::timestamptz)
