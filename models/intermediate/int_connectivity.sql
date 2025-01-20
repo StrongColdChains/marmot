@@ -38,11 +38,11 @@ select
     case
         when
             (received_at - created_at)
-            - interval '{{ var("lateness_threshold") }} minutes'
+            - interval '{{ var("connectivity_lateness_threshold") }} minutes'
             > interval '0 minutes'
             then
                 (received_at - created_at)
-                - interval '{{ var("lateness_threshold") }} minutes'
+                - interval '{{ var("connectivity_lateness_threshold") }} minutes'
         else interval '0 minutes'
     end
         as lateness,
