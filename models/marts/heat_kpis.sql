@@ -4,21 +4,14 @@ select
     SUM(
         case
             when
-                COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-                >= interval '48 hours'
+                duration >= interval '48 hours'
                 then 1
             else 0
         end
     ) as long_alarm_count,
-    SUM(
-        COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-    ) as cumulative_alarm_time,
-    AVG(
-        COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-    ) as average_alarm_time,
-    MAX(
-        COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-    ) as longest_alarm_time
+    SUM(duration) as cumulative_alarm_time,
+    AVG(duration) as average_alarm_time,
+    MAX(duration) as longest_alarm_time
 from (
     select *
     from {{ ref('heat_freezer_alarms') }}
