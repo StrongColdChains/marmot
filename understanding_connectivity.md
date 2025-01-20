@@ -122,3 +122,7 @@ to the biggest connectivity outage experienced by this base station.
 
 note: we probably shouldn't just show the largest lateness amount. We should to quantile information
 to give better information!
+
+TODO: the worst case possible connectivity is that the data has come in at NOW. Let's
+create a metric that uses that as the denominator and cumulative lateness as the
+numerator?
