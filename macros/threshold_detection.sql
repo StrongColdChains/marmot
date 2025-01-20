@@ -1,4 +1,4 @@
-{% macro interval_detection(
+{% macro threshold_detection(
     source_table, 
     time_column, 
     float_column, 
@@ -10,15 +10,17 @@ WITH input_with_lag AS (
     SELECT
         {{ float_column }} AS metric_value,
         {{ time_column }} AS created_at,
-        -- TODO: / NOTE: should we even care about monitor ID here?
-        -- if alarms are keyed on CCE, then we shouldn't care about
-        -- the device that's monitoring that CCE.
         cce_id,
         LAG({{ time_column }})
             OVER (
                 PARTITION BY cce_id
                 ORDER BY {{ time_column }}
-            ) AS previous_created_at
+            ) AS previous_created_at,
+        LAG({{ float_column }})
+            OVER (
+                PARTITION BY cce_id
+                ORDER BY {{ time_column }}
+            ) AS previous_metric_value
     FROM {{ source_table }}
 ),
 
@@ -35,6 +37,14 @@ threshold_crossed AS (
             THEN TRUE ELSE
             FALSE
         END AS threshold_is_crossed,
+        CASE
+            WHEN
+                previous_metric_value
+                {{ comparison_operator }}
+                {{ threshold }}
+            THEN TRUE ELSE
+            FALSE
+        END AS previous_threshold_is_crossed,
         -- Calculate the time difference from the previous row in minutes
         EXTRACT(epoch FROM (created_at - previous_created_at))
         / 60.0 AS minutes_since_previous_datapoint
@@ -50,11 +60,13 @@ reset_groups AS (
         -- cumulative time properly.
         SUM(
             CASE
+                -- When we have started a new threshold, increment reset_group
                 WHEN
-                    threshold_is_crossed
-                    = FALSE
-                    THEN 1 ELSE
-                    0
+                    threshold_is_crossed = TRUE
+                    and
+                    previous_threshold_is_crossed = FALSE
+                THEN 1
+                ELSE 0
             END
         ) OVER (
             PARTITION BY cce_id
@@ -70,10 +82,7 @@ cumulative_threshold_crossed AS (
         reset_group,
         SUM(
             CASE
-                WHEN threshold_is_crossed
-                = TRUE
-                -- TODO: do we need this coalesce? how is the
-                -- first datapoint handled if coalesce disappears?
+                WHEN COALESCE(previous_threshold_is_crossed, FALSE) = TRUE
                 THEN COALESCE(minutes_since_previous_datapoint, 0)
                 ELSE 0
             END
@@ -86,45 +95,7 @@ cumulative_threshold_crossed AS (
         minutes_since_previous_datapoint,
         cce_id
     FROM reset_groups
-),
-
-intervals AS (
-    SELECT
-        -- Identify when the alarm begins or stops
-        CASE
-        -- begin: Cumulative time below 0°C exceeds 60 minutes
-        -- NOTE: by specifying > rather than >= for your
-        -- comparison_operator, excursions that last
-        -- *exactly* duration_threshold do not count as an alarm.
-            WHEN
-                cumulative_minutes
-                > {{ duration_threshold }}
-                AND LAG(
-                    cumulative_minutes
-                    )
-                    OVER (
-                        PARTITION BY cce_id
-                        ORDER BY created_at
-                    ) <= {{ duration_threshold }}
-                THEN 'begin'
-            WHEN LAG(cumulative_minutes)
-                    OVER (
-                        PARTITION BY cce_id
-                        ORDER BY created_at
-                    ) > {{ duration_threshold }}
-                THEN
-                    CASE
-                        WHEN
-                            threshold_is_crossed
-                            = TRUE THEN 'ongoing'
-                        ELSE 'stop'
-                    END
-            ELSE 'no_alarm'
-        END AS alarm_status,
-        *
-    FROM cumulative_threshold_crossed
 )
 
-SELECT *
-FROM intervals
+SELECT * FROM cumulative_threshold_crossed
 {% endmacro %}

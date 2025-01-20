@@ -4,9 +4,9 @@ select
     SUM(
         COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
     ) as cumulative_alarm_time,
-    SUM(
+    AVG(
         COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-    ) / COUNT(*) as average_alarm_duration
+    ) as average_alarm_duration
 from {{ ref('door_alarms') }}
 where
     COALESCE(stop, '{{ var("now") }}'::timestamptz)
