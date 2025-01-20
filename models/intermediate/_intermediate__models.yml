@@ -2,11 +2,10 @@ version: 2
 
 models:
   # TODO: how to repeat this docs programmatically?
-  - name: int_temperature_intervals
+  - name: int_heat_freezer_thresholds
     description: > 
-      A view into whether a time series row has been considered as being part of a temperature alarm.
-      This view could also be seen as a tool to turn time series data into alarm time series data, where
-      each row sent by an EMD also has information about whether an alarm is active.
+      A view into whether a time series row has been considered as being part of an alarm. See
+      macros/threshold_detection.sql for more details.
     columns:
       - name: cce_id
         data_type: text
@@ -25,9 +24,6 @@ models:
       - name: cumulative_minutes
         description: "How long the threshold has been crossed"
         data_type: integer
-      - name: alarm_status
-        description: Whether the alarm is triggered. [no_alarm, begin, stop]
-        data_type: string
   - name: int_temperature_cce_type_range
     description: "temperature_ts with additional inferred information to be used for detecting CCE type"
     columns:

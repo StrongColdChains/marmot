@@ -15,7 +15,7 @@ with normal_kpis as (
     group by cce_id
 ),
 
-intervals_with_minutes_until as (
+thresholds_with_minutes_until as (
     select
         cce_id,
         EXTRACT(epoch from (
@@ -27,15 +27,15 @@ intervals_with_minutes_until as (
             - created_at
         )) / 60.0 as minutes_until_next_datapoint,
         threshold_is_crossed
-    from {{ ref('int_power_intervals') }}
+    from {{ ref('int_power_thresholds') }}
     where created_at >= '{{ var("now") }}'::timestamptz - interval '30 days'
 ),
 
-interval_kpis as (
+threshold_kpis as (
     select
         cce_id,
         SUM(minutes_until_next_datapoint) as minutes_power_active
-    from intervals_with_minutes_until
+    from thresholds_with_minutes_until
     where threshold_is_crossed = FALSE
     group by cce_id
 )
@@ -46,5 +46,5 @@ select
     n.cumulative_alarm_time,
     n.average_alarm_time,
     i.minutes_power_active
-from normal_kpis as n inner join interval_kpis as i
+from normal_kpis as n inner join threshold_kpis as i
     on n.cce_id = i.cce_id

@@ -1,4 +1,4 @@
-{% macro interval_detection(
+{% macro threshold_detection(
     source_table, 
     time_column, 
     float_column, 

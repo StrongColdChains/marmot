@@ -11,25 +11,18 @@ Appliance "types" described by E006 DS01.2:
 - emd vs no emd
 
 These are not defined rigorously, they're just mentioned throughout the document.
-Future refactor work would be think through whether its worth trying to
-rethink how we handle temperature alarms.
+It's tempting to try to create a bunch of different parameters to track all the
+different "application types" but since the document is so unrigorous in defining
+them, I think it's actually easier to just literally enumerate all the use cases
+defined by the document. A bit tedious to maintain but introduces a lot less toil.
 
 
-We probably shouldn't generate alarms / intervals for
-CCEs that don't validate.
+Right now alarms / thresholds are always being generated, but we don't need to
+generate freezer heat alarms for a fridge. Let's reduce that work in the future.
 
-For each alarm we support, we should have an interval generated.
+## Alarm Definitions
 
-Each interval should limit the CCEs it pulls and calculates stats
-for.
-
-Maybe all the alarms get dumped into the same model?
-
-Well, are the KPIs shared across alarms? Not really, each is defined
-individually.
-
-Uptime is defined on all the alarms.
-
-
-We either have them fan in, then fan out again for KPIs, OR just keep
-them separated out and fan them in for the uptime def.
+If a CCE has an alarm (the conditions of the alarm have been met) then the alarm
+will begin on the first time series data point that violates the alarm threshold
+and will stop on the first time series data point that no longer violates the
+alarm threshold.

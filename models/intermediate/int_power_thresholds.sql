@@ -1,4 +1,4 @@
-{{ interval_detection(
+{{ threshold_detection(
     source_table=ref('stg_power_ts'),
     time_column='created_at',
     float_column='power',
