@@ -18,16 +18,9 @@ select
     ) as average_alarm_time,
     MAX(
         COALESCE(stop, '{{ var("now") }}'::timestamptz) - begin
-    ) as longest_alarm_time,
-    alarm_temperature_type,
-    alarm_cce_type
-from {{ ref('temperature_alarms') }}
--- TODO: figure out how to mock '{{ var("now") }}'::timestamptz for tests.
--- Should we use vars?
--- Your tests are quite bad right now without decent NOW mocking.
--- TODO: "in the last 30 days", should we be measuring that relative
--- to the end of an alarm or the beginning?
+    ) as longest_alarm_time
+from {{ ref('freeze_fridge_alarms') }}
 where
     COALESCE(stop, '{{ var("now") }}'::timestamptz)
     >= '{{ var("now") }}'::timestamptz - interval '30 days'
-group by cce_id, alarm_temperature_type, alarm_cce_type
+group by cce_id

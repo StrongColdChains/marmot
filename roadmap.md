@@ -5,14 +5,16 @@ A vague list of things that we'd like to do in the near future.
 ## technical things
 
 - Implement ACK as time series data!
+  - Good introductary feature.
 - add sim signal strength
   - "Cell signal strength typically ranges from -50 dBm to -120 dBm"
   - if a device goes offline and the previous few days of signal strength are really
       bad, then we can attribute the offline to sim connectivity.
-- Implement door / power kpis.
+  - Good introductary feature.
 - Implement functional status of appliance, uptime score.
   - let's not just make functional status a bool. let's change it to a float so that
       we can provide a more nuanced understanding of the appliance's health.
+  - Good introductary feature.
 - Create basic metrics that assess the health of the underlying CCE.
   - pull out things like the range of the temperature wave. rate of temp increase.
   - see if the average temperature of the cce is consistently drifting low
@@ -63,4 +65,8 @@ A vague list of things that we'd like to do in the near future.
     can we do to improve their performance?
 - is there any way we can measure the effectiveness of device setups? For devices that operate over
     wires, is there any way for us to know if a configuration is bad?
+- is there a reason EMD alarms are defined but not KPIs?
+- https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457 read
+    through this. Does it really make sense to not try to tackle any real-time data stuff with this
+    project? What frequency limitations does this project have?
 

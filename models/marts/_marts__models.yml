@@ -32,3 +32,16 @@ models:
         description: the maximum time a alarm was active for this CCE in the last 30 days.
       - name: alarm_type
         description: the type of alarm this was.
+  - name: temperature_alarms
+    description: Temperature alarms as defined by the WHO.
+    columsn:
+      - name: begin
+        description: when the alarm began
+      - name: stop
+        description: when the alarm stopped
+      - name: cce_id
+        description: the cce from whence the alarm was generated
+      - name: alarm_temperature_type
+        description: This can either be 'heat' or 'freeze'
+      - name: alarm_cce_type
+        description: This can either be 'fridge' or 'freezer'
