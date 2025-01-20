@@ -34,7 +34,7 @@ models:
         description: the type of alarm this was.
   - name: temperature_alarms
     description: Temperature alarms as defined by the WHO.
-    columsn:
+    columns:
       - name: begin
         description: when the alarm began
       - name: stop
@@ -45,3 +45,29 @@ models:
         description: This can either be 'heat' or 'freeze'
       - name: alarm_cce_type
         description: This can either be 'fridge' or 'freezer'
+  - name: connectivity_kpis
+    description: >
+        KPIs defined for base station connectivity. All data points
+        sent by the base station in the last 30 days are considered.
+        Note that received_at is referenced for determining the last
+        30 days, not created_at.
+    columns:
+      - name: monitor_id
+        description: The monitor for these KPIs.
+      - name: cumulative_lateness
+        description: >
+          The sum of all the lateness for the datapoints sent by this
+          monitor in the last 30 days. A large value for this implies
+          either that there are many datapoints sent by that base station
+          that were late, or there were a smaller number that were
+          very late.
+      - name: average_lateness
+        description: >
+          The average amount of lateness for datapoints sent by this
+          base station
+      - name: max_lateness
+        description: >
+          The largest amount of lateness for datapoints sent by this
+          base station. This basically amounts to the largest
+          connectivity outage experienced by this base station in the
+          last 30 days.

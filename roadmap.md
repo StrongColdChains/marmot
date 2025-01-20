@@ -43,6 +43,7 @@ A vague list of things that we'd like to do in the near future.
 - settle on a technology for visualizing time series data.
 - figure out a story for performance monitoring + load testing.
 - hook up https://github.com/plmercereau/chat-dbt to postgres! woo! cool! ai for cheap :p
+- connectivity should also be defined for sensors, not just base stations.
 
 ## communication / writing / education things
 

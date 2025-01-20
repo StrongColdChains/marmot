@@ -43,3 +43,4 @@ vars:
   # and how to ensure NOW is replaced with actual now when
   # this is run in prod.
   now: "2023-12-01 00:00:00+00"
+  connectivity_lateness_threshold: 90
