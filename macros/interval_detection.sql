@@ -95,43 +95,7 @@ cumulative_threshold_crossed AS (
         minutes_since_previous_datapoint,
         cce_id
     FROM reset_groups
-),
-
-begin_intervals AS (
-    SELECT
-        -- Identify when the alarm begins
-        CASE
-            WHEN
-                cumulative_minutes
-                >= {{ duration_threshold }}
-                AND LAG(
-                    cumulative_minutes
-                    )
-                    OVER (
-                        PARTITION BY cce_id
-                        ORDER BY created_at
-                    ) < {{ duration_threshold }}
-                THEN TRUE
-            ELSE FALSE
-        END AS begin,
-        *
-    FROM cumulative_threshold_crossed
-),
-begin_stop_intervals AS (
-    SELECT
-        -- Identify when the alarm ends
-        -- begin and end can occur on the same row!
-        CASE
-            WHEN cumulative_minutes >= {{ duration_threshold }}
-            AND threshold_is_crossed = FALSE
-            THEN TRUE
-            ELSE FALSE
-        END AS stop,
-        *
-    FROM begin_intervals
-
 )
 
-SELECT *
-FROM begin_stop_intervals
+SELECT * FROM cumulative_threshold_crossed
 {% endmacro %}
