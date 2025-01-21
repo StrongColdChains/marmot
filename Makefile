@@ -3,6 +3,9 @@
 fix:
 	sqlfluff fix
 
+lint:
+	sqlfluff lint
+
 test:
 	./load/load_csvs.sh
 	dbt build
