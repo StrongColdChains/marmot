@@ -2,27 +2,27 @@ select
     *,
     'door' as alarm_type
 from {{ ref('door_alarms') }}
-union distinct
+union
 select
     *,
     'power' as alarm_type
 from {{ ref('power_alarms') }}
-union distinct
+union
 select
     *,
     'heat_fridge' as alarm_type
 from {{ ref('heat_fridge_alarms') }}
-union distinct
+union
 select
     *,
     'heat_freezer' as alarm_type
 from {{ ref('heat_freezer_alarms') }}
-union distinct
+union
 select
     *,
     'freeze_fridge' as alarm_type
 from {{ ref('freeze_fridge_alarms') }}
-union distinct
+union
 select
     *,
     'emd_connection' as alarm_type
