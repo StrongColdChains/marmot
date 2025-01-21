@@ -15,7 +15,7 @@ select
 from (
     select *
     from {{ ref('heat_freezer_alarms') }}
-    union
+    union distinct
     select *
     from {{ ref('heat_fridge_alarms') }}
 )
