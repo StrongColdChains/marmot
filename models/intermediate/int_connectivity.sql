@@ -6,21 +6,21 @@ with unioned_ts as (
         monitor_id,
         'door' as source -- noqa: RF04
     from {{ ref('stg_door_ts') }}
-    union distinct
+    union
     select
         created_at,
         received_at,
         monitor_id,
         'emd_connection' as source -- noqa: RF04
     from {{ ref('stg_emd_connection_ts') }}
-    union distinct
+    union
     select
         created_at,
         received_at,
         monitor_id,
         'power' as source -- noqa: RF04
     from {{ ref('stg_power_ts') }}
-    union distinct
+    union
     select
         created_at,
         received_at,
