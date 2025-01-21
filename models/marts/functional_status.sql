@@ -30,6 +30,9 @@ nonfunctional_cces as (
     group by cce_id
 )
 
+-- TODO: It is very bad practice to not have the intermediate
+-- calculations used in determining functional status not easily
+-- viewable somewhere. Let's fix this.
 select
     cce_id,
     '0' as functional_status
