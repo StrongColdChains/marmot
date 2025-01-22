@@ -15,7 +15,7 @@ def db_connection():
         dbname="dbt",
         user="user",
         password="user",
-        host="postgres" if "DOCKER_RUNNING" in os.environ else "localhost",
+        host=os.environ.get("MARMOT_DB_HOST", "localhost"),
         port="5432"
     )
     yield conn
