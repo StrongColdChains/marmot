@@ -12,5 +12,5 @@ jobs:
       - name: build the docker container
         run: docker build -t marmot .
       - name: sqlfluff lint
-        uses: docker run --network marmot_default marmot
+        run: docker run --network marmot_default marmot
 
