@@ -12,14 +12,16 @@ A vague list of things that we'd like to do in the near future.
   - if a device goes offline and the previous few days of signal strength are really
       bad, then we can attribute the offline to sim connectivity.
   - Good introductary feature.
-- Implement functional status of appliance, uptime score.
-  - let's not just make functional status a bool. let's change it to a float so that
-      we can provide a more nuanced understanding of the appliance's health.
+- Make the intermediate calculations in `nonfunctional_cces` a view so that functional
+    status can be easily debugged.
+  - Good introductary feature.
+- Make functional status a float so that we can provide a more nuanced view of
+    a cce's health. Thresholds are generally bad, floats are good : )
   - Good introductary feature.
 - Create basic metrics that assess the health of the underlying CCE.
   - pull out things like the range of the temperature wave. rate of temp increase.
   - see if the average temperature of the cce is consistently drifting low
-    -     - https://github.com/facebookresearch/Kats/blob/main/tutorials/kats_202_detection.ipynb
+    - https://github.com/facebookresearch/Kats/blob/main/tutorials/kats_202_detection.ipynb
   - ideally, this metric should be resilient to power-outage related temperature excursions.
 - Make a stab at categorizing *why* excursions happen. power outage? door left open?
   - first, just look at a CCEs other data sources.
