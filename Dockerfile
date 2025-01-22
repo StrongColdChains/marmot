@@ -1,8 +1,8 @@
-# Container image that runs your code
-FROM alpine:3.10
+FROM ghcr.io/dbt-labs/dbt-postgres:1.9.latest
 
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
+COPY requirements.txt /tmp/
+RUN pip install --requirement /tmp/requirements.txt
+COPY . /tmp/
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["tmp/entrypoint.sh"]
