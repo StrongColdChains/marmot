@@ -18,7 +18,7 @@ services:
     # NOTE: running things on this container is WAY slower than running
     # locally for some reason. It seems to be bottled by CPU, based on
     # the output of docker stats?
-    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+    build: .
     container_name: dbt
     platform: linux/amd64
     depends_on:
@@ -26,8 +26,6 @@ services:
     volumes:
       - .:/usr/app
       - ./dbt_config:/root/.dbt  # Mount the profiles.yml directory
-    working_dir: /usr/app
-    entrypoint: ["tail", "-f", "/dev/null"]
 
 volumes:
   postgres_data:

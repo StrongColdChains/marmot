@@ -8,4 +8,5 @@ COPY . .
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 # ENTRYPOINT ["ls", "-l", "./"]
 
-ENTRYPOINT ["./entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]

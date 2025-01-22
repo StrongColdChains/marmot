@@ -3,12 +3,12 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: sqlfluff lint
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Hello world action step
-        uses: ./
+      - name: build the stack
+        uses: docker-compose up -d
+      - name: sqlfluff
+        uses: docker compose run dbt sqlfluff lint
 
