@@ -6,7 +6,7 @@ max_line_length = 80
 [sqlfluff:templater:dbt]
 project_dir = .
 profiles_dir = ~/.dbt/
-profile = cold_chain_dbt
+profile = marmot
 target = dev
 
 [sqlfluff:templater:jinja]

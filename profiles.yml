@@ -1,4 +1,4 @@
-cold_chain_dbt:
+marmot:
   target: dev
   outputs:
     dev:
