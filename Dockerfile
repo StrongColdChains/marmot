@@ -6,6 +6,6 @@ RUN pip install --requirement ./requirements.txt
 COPY . .
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["ls", "-l", "./"]
+# ENTRYPOINT ["ls", "-l", "./"]
 
-# ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
