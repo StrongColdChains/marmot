@@ -14,7 +14,7 @@ def db_connection():
         dbname="dbt",
         user="user",
         password="user",
-        host="localhost",
+        host="postgres",
         port="5432"
     )
     yield conn
