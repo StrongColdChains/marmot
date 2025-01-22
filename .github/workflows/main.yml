@@ -9,6 +9,8 @@ jobs:
         uses: actions/checkout@v4
       - name: build the stack
         run: docker compose up -d
+      - name: build the docker container
+        run: docker build -t marmot .
       - name: sqlfluff lint
-        uses: ./
+        uses: docker run --network marmot_default marmot
 
