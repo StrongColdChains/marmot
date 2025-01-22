@@ -4,6 +4,7 @@ A vague list of things that we'd like to do in the near future.
 
 ## technical things
 
+- make alarm thresholds configurable - the various design docs imply that they should be.
 - Implement ACK as time series data!
   - Good introductary feature.
 - add sim signal strength
