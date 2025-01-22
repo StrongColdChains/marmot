@@ -1,28 +1,16 @@
-name: Makefile CI
-
-on:
-  push:
-    branches: [ "combs/testing-github-ci" ]
-  pull_request:
-    branches: [ "combs/testing-github-ci" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    container: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: testing testing 123
-      run: |
-        echo This job does not specify a container.
-        echo It runs directly on the virtual machine.
-    - name: testing ls
-      run: ls .
-    - name: Install dependencies
-      run: make
-
-    - name: Run lint
-      run: make lint
-
+# action.yml
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
