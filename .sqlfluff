@@ -5,7 +5,7 @@ max_line_length = 80
 
 [sqlfluff:templater:dbt]
 project_dir = .
-profiles_dir = ~/.dbt/
+profiles_dir = .
 profile = marmot
 target = dev
 
