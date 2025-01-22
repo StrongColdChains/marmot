@@ -1,4 +1,5 @@
 import datetime
+import os
 import pytest
 import psycopg2
 
@@ -14,7 +15,7 @@ def db_connection():
         dbname="dbt",
         user="user",
         password="user",
-        host="postgres",
+        host="postgres" if "DOCKER_RUNNING" in os.environ else "localhost",
         port="5432"
     )
     yield conn

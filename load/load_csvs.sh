@@ -23,7 +23,10 @@ then
 fi
 
 # Database connection details
-DB_HOST="postgres"
+DB_HOST="localhost"
+if [[ -n "$MARMOT_DB_HOST" ]]
+    then DB_HOST="postgres"
+fi
 DB_USER="user"
 DB_NAME="dbt"
 export PGPASSWORD="user"
