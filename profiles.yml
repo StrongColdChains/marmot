@@ -9,7 +9,7 @@ marmot:
       # the host itself :p.
       # I'm getting like 10x slower dbt runs in docker and can't debug it
       # in 30 minutes so I'm just gonna stop for now.
-      host: localhost
+      host: postgres
       pass: user
       port: 5432
       schema: public
