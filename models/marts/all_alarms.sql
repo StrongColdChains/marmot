@@ -7,7 +7,7 @@ select
     *,
     'power' as alarm_type
 from {{ ref('power_alarms') }}
-union
+union distinct
 select
     *,
     'heat_fridge' as alarm_type
