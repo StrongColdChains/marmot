@@ -1,8 +1,9 @@
 FROM ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+WORKDIR /usr/local/app
 
-COPY requirements.txt /tmp/
+COPY requirements.txt ./
 RUN pip install --requirement /tmp/requirements.txt
-COPY . /tmp/
+COPY . ./
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/tmp/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
