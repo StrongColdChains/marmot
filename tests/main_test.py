@@ -1,4 +1,5 @@
 import datetime
+import os
 import pytest
 import psycopg2
 
@@ -14,7 +15,7 @@ def db_connection():
         dbname="dbt",
         user="user",
         password="user",
-        host="localhost",
+        host=os.environ.get("MARMOT_DB_HOST", "localhost"),
         port="5432"
     )
     yield conn
@@ -123,11 +124,7 @@ def test_non_temperature_alarms(db_connection):
             None,
             "b"
         ),
-        # Alarm should start between time series points if that's where the
-        # threshold duration would end.
         (
-            # TODO: This should actually be 7, right now its 9 because an alarm
-            # can only start on a time where a tsf is recorded.
             datetime.datetime(2023, 11, 21, 0, 2),
             None,
             "c"

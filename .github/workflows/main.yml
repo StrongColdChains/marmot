@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+    name: run ci lint + tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Is this really the best way to do this?
+      # I am not happy at all with how I've gotten docker and compose
+      # configured, but not sure what the best way to do it is :/
+      #
+      # Ideally we have some other process that builds the dockerfile.
+      - name: build the stack
+        run: docker compose up -d
+      - name: lint
+        run: docker exec dbt make lint
+      - name: test
+        run: docker exec dbt make test
+

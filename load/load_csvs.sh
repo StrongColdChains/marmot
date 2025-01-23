@@ -23,7 +23,7 @@ then
 fi
 
 # Database connection details
-DB_HOST="localhost"
+DB_HOST="${MARMOT_DB_HOST:-localhost}"
 DB_USER="user"
 DB_NAME="dbt"
 export PGPASSWORD="user"

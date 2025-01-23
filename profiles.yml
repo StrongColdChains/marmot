@@ -3,13 +3,9 @@ marmot:
   outputs:
     dev:
       dbname: dbt
-      # Note: swap localhost out for postgres if you're running this inside
-      # of docker. I am bad at docker stuff and can't figure out an easy way
-      # to modify this based on whether you're running this in docker vs on
-      # the host itself :p.
-      # I'm getting like 10x slower dbt runs in docker and can't debug it
-      # in 30 minutes so I'm just gonna stop for now.
-      host: localhost
+      # I'm getting like 10x slower dbt runs in docker and can't
+      # figure out why :/
+      host: "{{ env_var('MARMOT_DB_HOST', 'localhost') }}"
       pass: user
       port: 5432
       schema: public
