@@ -11,12 +11,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  marmot_dbt:
+  dbt:
     # NOTE: running things on this container is WAY slower than running
     # locally for some reason. It seems to be bottled by CPU, based on
     # the output of docker stats?
     build: .
-    container_name: marmot_dbt
+    container_name: dbt
     platform: linux/amd64
     depends_on:
       - postgres

@@ -15,7 +15,7 @@ jobs:
       - name: build the stack
         run: docker compose up -d
       - name: lint
-        run: docker exec marmot_dbt make lint
+        run: docker exec dbt make lint
       - name: test
-        run: docker exec marmot_dbt make test
+        run: docker exec dbt make test
 
