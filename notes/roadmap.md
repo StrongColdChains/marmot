@@ -4,20 +4,46 @@ A vague list of things that we'd like to do in the near future.
 
 ## technical things
 
+### things to do before advertising
+- Turn all of the env var stuff into env vars if its relevant
+  - postgres user / pass deets. Obviously production instances should be encouraged
+    to use legit credentials that aren't stored in git.
+- turn cce_id and monitor_id into actual foreign keys.
+  - cces need to make the following distinctions
+    - stationary vs mobile
+    - refrigeration vs freezer
+    - room vs non-room
+    - mains-powered vs solar-powered
+    - emd vs no emd
+  - determine what distinctions we need to make for monitors.
+  - figure out the PQS terms for (cce / monitor / sensor / base station) and use them.
 - make alarm thresholds configurable - the various design docs imply that they should be.
+- properly document dbt stuff
+- review project structure of dbt. should the project be dev? should everything be
+  in one schema?
+- update naming of models (uptime island should be int, not mart).
 - Implement ACK as time series data!
-  - Good introductary feature.
+  - Good introductory feature.
+- start to write some data generation tools. Look at timescale's tsbs tool for inspiration.
+- (stretch goal): write a CCE report with latex. this report should be useful
+  for a CCE repair person on-site.
+  - contains all relevant KPIs for the CCE.
+  - highlights all *points of interest* in the last X days in a graph.
+  - should be able to handle arbitrary numbers of days.
+  - appendix should contain all relevant info that we have on the CCE.
+
+### Next steps (these are more fun :D)
 - add sim signal strength
   - "Cell signal strength typically ranges from -50 dBm to -120 dBm"
   - if a device goes offline and the previous few days of signal strength are really
       bad, then we can attribute the offline to sim connectivity.
-  - Good introductary feature.
+  - Good introductory feature.
 - Make the intermediate calculations in `nonfunctional_cces` a view so that functional
     status can be easily debugged.
-  - Good introductary feature.
+  - Good introductory feature.
 - Make functional status a float so that we can provide a more nuanced view of
     a cce's health. Thresholds are generally bad, floats are good : )
-  - Good introductary feature.
+  - Good introductory feature.
 - Create basic metrics that assess the health of the underlying CCE.
   - pull out things like the range of the temperature wave. rate of temp increase.
   - see if the average temperature of the cce is consistently drifting low
@@ -26,14 +52,7 @@ A vague list of things that we'd like to do in the near future.
 - Make a stab at categorizing *why* excursions happen. power outage? door left open?
   - first, just look at a CCEs other data sources.
   - then, look at the facility its in
-- metabase is a self-serve BI tool. Get it working on top of our postgres database.
-- start to write some data generation tools. Look at timescale's tsbs tool for inspiration.
 - create a tool for imputing missing data. integrate it into the dbt dag.
-- write a CCE report with latex. this report should be useful for a CCE repair person on-site.
-  - contains all relevant KPIs for the CCE.
-  - highlights all *points of interest* in the last X days in a graph.
-  - should be able to handle arbitrary numbers of days.
-  - appendix should contain all relevant info that we have on the CCE.
 - actually set up tests in a good way??? don't understand dbt's testing framework yet.
 - define a data model for devices, cces, facilities, and arbitrary groupings of cces.
   - facilities should be implemented as an arbitrary grouping of cces. it's a special case.
