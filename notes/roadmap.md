@@ -4,6 +4,9 @@ A vague list of things that we'd like to do in the near future.
 
 ## technical things
 
+- Turn all of the env var stuff into env vars if its relevant
+  - postgres user / pass deets. Obviously production instances should be encouraged
+    to use legit credentials that aren't stored in git.
 - make alarm thresholds configurable - the various design docs imply that they should be.
 - Implement ACK as time series data!
   - Good introductary feature.
