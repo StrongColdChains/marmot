@@ -6,9 +6,6 @@ models:
     the last 30 days without an alarm active."
     columns:
       - name: cce_id
-        meta:
-          # testing dbt-metabase
-          metabase.semantic_type: type/Description
       - name: uptime_percentage
   - name: inferred_cce_type
     description: "The inferred type of a given CCE. This is used to detect mislabeled CCE types."
