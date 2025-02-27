@@ -1,6 +1,8 @@
 services:
   metabase:
     image: metabase/metabase:latest
+    profiles:
+      - metabase
     container_name: metabase
     hostname: metabase
     volumes:
