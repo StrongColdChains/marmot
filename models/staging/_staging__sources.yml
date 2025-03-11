@@ -7,3 +7,4 @@ sources:
         - name: raw_emd_connection
         - name: raw_temperature
         - name: raw_power
+        - name: raw_ack
