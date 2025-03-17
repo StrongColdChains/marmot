@@ -9,7 +9,7 @@ lint:
 test:
 	./load/load_csvs.sh
 	dbt build
-	pytest tests
+	dbt test
 
 dbt_test_build:
 	# https://docs.getdbt.com/blog/dbt-production-commands#1-always-test-your-data
