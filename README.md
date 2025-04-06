@@ -21,3 +21,5 @@ To set up your postgres tables initially, use the scripts and data provided in
 the `load` folder. DBT is not intended to be a loading tool and expects data to
 exist in the configured sources prior to being run. The make commands will do
 this for you.
+
+easter egg
